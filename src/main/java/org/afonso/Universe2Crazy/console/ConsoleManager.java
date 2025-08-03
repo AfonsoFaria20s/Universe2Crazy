@@ -69,9 +69,18 @@ public class ConsoleManager {
 
         switch (command) {
             case "create":
-                String universeName = parsedCommand.getArgs()[0];
-                universeManager.addUniverse(new Universe(universeName, new UniverseFrame(universeName, new UniversePanel())), universeName);
-                historyPanel.appendCommentHistory("Created Universe: "+universeName);
+                String universeNameToCreate = parsedCommand.getArgs()[0];
+                universeManager.addUniverse(new Universe(universeNameToCreate, new UniverseFrame(universeNameToCreate, new UniversePanel())), universeNameToCreate);
+                historyPanel.appendCommentHistory("Created Universe: "+universeNameToCreate);
+                break;
+            case "remove":
+                String universeNameToRemove = parsedCommand.getArgs()[0];
+                if(universeManager.removeUniverse(universeNameToRemove)==0) {
+                    historyPanel.appendCommentHistory("Deleted Universe: "+universeNameToRemove);
+                } else {
+                    historyPanel.appendCommentHistory("Error: Universe does not exist!");
+                }
+
                 break;
             case "list":
                 if(args[0].equals("universes")) {

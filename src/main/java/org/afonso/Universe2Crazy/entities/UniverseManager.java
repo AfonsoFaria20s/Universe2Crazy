@@ -18,6 +18,14 @@ public class UniverseManager {
         universes.put(id, universe);
     }
 
+    public int removeUniverse(String id) {
+        if(!universes.containsKey(id)) return -1;
+
+        universes.get(id).getUniverseFrame().dispose();
+        universes.remove(id);
+        return 0;
+    }
+
     public String getListedUniverses() {
         StringBuilder stringBuilder = new StringBuilder("Available Universes: \n");
         for (Map.Entry<String, Universe> universeEntry : universes.entrySet()) {
