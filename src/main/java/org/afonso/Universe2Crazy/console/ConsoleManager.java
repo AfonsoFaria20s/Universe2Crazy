@@ -59,7 +59,7 @@ public class ConsoleManager {
 
     public void executeCommand(String input) {
         ParsedCommand parsedCommand = commandParser.parse(input);
-        if(parsedCommand.getArgs().length==0) {
+        if(parsedCommand.getCommand().isEmpty()) {
             historyPanel.appendCommentHistory("");
             return;
         }
@@ -80,7 +80,6 @@ public class ConsoleManager {
                 } else {
                     historyPanel.appendCommentHistory("Error: Universe does not exist!");
                 }
-
                 break;
             case "list":
                 if(args[0].equals("universes")) {
@@ -94,8 +93,21 @@ public class ConsoleManager {
                 universeManager.getUniverses().get(id).setName(newName);
                 universeManager.getUniverses().get(id).getUniverseFrame().updateFrame(newName);
                 break;
+            case "clear":
+                historyPanel.clearHistory();
+                break;
             default:
+                historyPanel.appendCommentHistory("Unknown Command: ");
+                StringBuilder sb = new StringBuilder();
+                sb.append(" - ").append(command);
+                for (String arg : args) {
+                    sb.append(" ").append(arg);
+                }
+                historyPanel.appendCommentHistory(sb.toString());
                 break;
         }
+
+        // Clear the command line for a new command
+        commandLine.clear();
     }
 }
