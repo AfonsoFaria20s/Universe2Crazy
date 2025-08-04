@@ -122,7 +122,13 @@ public class ConsoleManager {
                 break;
             case "name":
                 String id = args[0];
-                String newName = args[1];
+                StringBuilder sb = new StringBuilder();
+
+                for(String arg : args) {
+                    sb.append(arg).append(" ");
+                }
+
+                String newName = sb.toString();
 
                 universeManager.getUniverses().get(id).setName(newName);
                 universeManager.getUniverses().get(id).getUniverseFrame().updateFrame(newName);
