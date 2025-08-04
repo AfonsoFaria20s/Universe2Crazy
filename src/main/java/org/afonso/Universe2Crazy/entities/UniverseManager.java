@@ -26,6 +26,13 @@ public class UniverseManager {
         return 0;
     }
 
+    public int explodeUniverse(String id) {
+        if(!universes.containsKey(id)) return -1;
+
+        universes.get(id).getUniverseFrame().explode();
+        return 0;
+    }
+
     public String getListedUniverses() {
         StringBuilder stringBuilder = new StringBuilder("Available Universes: \n");
         for (Map.Entry<String, Universe> universeEntry : universes.entrySet()) {

@@ -2,6 +2,7 @@ package org.afonso.Universe2Crazy.console;
 
 import org.afonso.Universe2Crazy.entities.UniverseManager;
 import org.afonso.Universe2Crazy.entities.customization.Colors;
+import org.w3c.dom.css.Rect;
 
 import javax.swing.*;
 import java.awt.*;

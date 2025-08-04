@@ -2,6 +2,7 @@ package org.afonso.Universe2Crazy.entities;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class UniverseFrame extends JFrame {
 
@@ -30,5 +31,25 @@ public class UniverseFrame extends JFrame {
 
     public void updateFrame(String title) {
         this.setTitle(title);
+    }
+
+    // Animations
+    public void explode() {
+        Timer timer = new Timer(50,null);
+        int[] count = {0};
+
+        timer.addActionListener(e -> {
+            int xOffset = (int)(Math.random() * 15 - 5);
+            int yOffset = (int)(Math.random() * 15 - 5);
+            Point newPosition = new Point(this.getX()+xOffset, this.getY()+yOffset);
+            this.setLocation(newPosition);
+
+            if(++count[0]>15) {
+                timer.stop();
+                this.dispose();
+            }
+        });
+
+        timer.start();
     }
 }

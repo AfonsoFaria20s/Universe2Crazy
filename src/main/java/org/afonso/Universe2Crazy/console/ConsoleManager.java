@@ -81,6 +81,7 @@ public class ConsoleManager {
         String command = parsedCommand.getCommand();
         String[] args = parsedCommand.getArgs();
 
+        // Base cases
         switch (command) {
             case "create":
                 String universeNameToCreate = parsedCommand.getArgs()[0];
@@ -93,20 +94,20 @@ public class ConsoleManager {
                                                 colors,
                                                 colors.getRandomColorFromMap()))),
                         universeNameToCreate);
-                comment("Created Universe: "+universeNameToCreate);
+                comment("Created Universe: " + universeNameToCreate);
                 break;
             case "remove":
                 String universeNameToRemove = parsedCommand.getArgs()[0];
-                if(universeManager.removeUniverse(universeNameToRemove)==0) {
-                    comment("Deleted Universe: "+universeNameToRemove);
+                if (universeManager.removeUniverse(universeNameToRemove) == 0) {
+                    comment("Removed Universe: " + universeNameToRemove);
                 } else {
                     comment("Error: Universe does not exist!");
                 }
                 break;
             case "list":
-                if(args[0].equals("universes")) {
+                if (args[0].equals("universes")) {
                     comment(universeManager.getListedUniverses());
-                } else if(args[0].equals("colors")) {
+                } else if (args[0].equals("colors")) {
                     comment(colors.getListedColors());
                 }
                 break;
@@ -125,6 +126,16 @@ public class ConsoleManager {
                 break;
             case "clear":
                 historyPanel.clearHistory();
+                break;
+
+            // Easter egg cases
+            case "explode":
+                String universeId = parsedCommand.getArgs()[0];
+                if (universeManager.explodeUniverse(universeId) == 0) {
+                    comment("BOOM!!!");
+                } else {
+                    comment("Error: Universe does not exist!");
+                }
                 break;
             default:
                 comment("Unknown Command: ");
