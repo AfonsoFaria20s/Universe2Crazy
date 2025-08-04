@@ -1,6 +1,7 @@
 package org.afonso.Universe2Crazy.console;
 
 import org.afonso.Universe2Crazy.entities.UniverseManager;
+import org.afonso.Universe2Crazy.entities.customization.Colors;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +11,15 @@ public class Console extends JFrame {
     private HistoryPanel historyPanel;
     private CommandLine commandLine;
     private UniverseManager universeManager;
+    private Colors colors;
 
     private JMenuBar menuBar;
+
     private JMenu menu1;
+    private JMenu menu2;
+
     private JMenuItem clearConsole;
+    private JMenuItem exit;
 
     public Console() {
         this.setSize(400,250);
@@ -29,18 +35,28 @@ public class Console extends JFrame {
         commandLine = new CommandLine();
 
         menuBar = new JMenuBar();
-        menu1 = new JMenu("Tools");
+
+        menu1 = new JMenu("General");
+        menu2 = new JMenu("Tools");
+
         clearConsole = new JMenuItem("Clear Console");
+        exit = new JMenuItem("Exit");
 
         menuBar.add(menu1);
-        menu1.add(clearConsole);
+        menuBar.add(menu2);
+
+        menu1.add(exit);
+
+        menu2.add(clearConsole);
 
         this.add(menuBar, BorderLayout.NORTH);
         this.add(historyPanel, BorderLayout.CENTER);
         this.add(commandLine, BorderLayout.SOUTH);
 
+        colors = new Colors();
+
         UniverseManager universeManager = new UniverseManager(historyPanel);
-        ConsoleManager consoleManager = new ConsoleManager(historyPanel, commandLine, menuBar, universeManager, this);
+        ConsoleManager consoleManager = new ConsoleManager(historyPanel, commandLine, menuBar, universeManager, this, colors);
     }
 
     public void init() {
