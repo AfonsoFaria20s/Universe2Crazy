@@ -52,7 +52,18 @@ public class ConsoleManager {
             public void keyReleased(KeyEvent keyEvent) {}
         });
 
-        menuBar.getMenu(0).getItem(0).addActionListener(actionEvent -> historyPanel.clearHistory());
+        menuBar.getMenu(0).getItem(0).addActionListener(actionEvent -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    null,
+                    "Are you sure you want to leave?",
+                    "",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });
+        menuBar.getMenu(1).getItem(0).addActionListener(actionEvent -> historyPanel.clearHistory());
     }
 
     public void processInput() {
