@@ -22,12 +22,14 @@ public class Console extends JFrame {
     private JMenuItem exit;
 
     public Console() {
-        this.setSize(400,250);
+        this.setSize(320,0);
         this.setTitle("Console");
         this.setLocation(
-                Toolkit.getDefaultToolkit().getScreenSize().width-this.getWidth()-150,
+                Toolkit.getDefaultToolkit().getScreenSize().width-this.getWidth(),
                 Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getHeight()/2);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_VERT);
 
         this.setLayout(new BorderLayout());
 

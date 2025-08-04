@@ -7,10 +7,10 @@ public class UniverseFrame extends JFrame {
 
     private Dimension defaultSize;
 
-    private JPanel panel;
+    private UniversePanel panel;
     private String title;
 
-    public UniverseFrame(String title, JPanel panel) {
+    public UniverseFrame(String title, UniversePanel panel) {
         this.title = title;
         this.panel = panel;
 
@@ -24,7 +24,7 @@ public class UniverseFrame extends JFrame {
         this.add(panel);
     }
 
-    public JPanel getPanel() {
+    public UniversePanel getPanel() {
         return panel;
     }
 

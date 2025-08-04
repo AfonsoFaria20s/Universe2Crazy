@@ -87,7 +87,11 @@ public class ConsoleManager {
                 universeManager.addUniverse(
                         new Universe(
                                 universeNameToCreate,
-                                new UniverseFrame(universeNameToCreate, new UniversePanel(colors.getRandomColorFromMap()))),
+                                new UniverseFrame(
+                                        universeNameToCreate,
+                                        new UniversePanel(
+                                                colors,
+                                                colors.getRandomColorFromMap()))),
                         universeNameToCreate);
                 comment("Created Universe: "+universeNameToCreate);
                 break;
@@ -116,7 +120,8 @@ public class ConsoleManager {
             case "color":
                 String universeName = args[0];
                 String newColor = args[1];
-                // TODO
+                universeManager.getUniverses().get(universeName).getUniverseFrame().getPanel().changeBackgroundColor(newColor);
+                comment("Changed background color!");
                 break;
             case "clear":
                 historyPanel.clearHistory();
