@@ -1,10 +1,17 @@
 package org.afonso.Universe2Crazy.entities;
 
+import org.afonso.Universe2Crazy.entities.customization.Color;
+
 import javax.swing.*;
-import java.awt.*;
 
 public class UniversePanel extends JPanel {
-    public UniversePanel() {
+
+    private Color backgroundColor;
+
+    public UniversePanel(Color color) {
+        this.backgroundColor = color;
+
+        this.setBackground(color.getColorCode());
         this.setVisible(true);
     }
 }
