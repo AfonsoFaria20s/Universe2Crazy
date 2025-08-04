@@ -71,7 +71,7 @@ clear                  # Cleanse the sacred scrolls
 
 ##  Acknowledgments
 
-**Created by:** [Afonso Faria](https://github.com/afonsovfaria)  
+**Created by:** [Afonso Faria](https://github.com/AfonsoFaria20s)  
 **Inspired by:** King Terry A. Davis  
 **Powered by:** The sacred fires of Java and the cosmic forces of Maven
 
