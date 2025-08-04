@@ -137,6 +137,9 @@ public class ConsoleManager {
                     comment("Error: Universe does not exist!");
                 }
                 break;
+            case "bigbang":
+                universeManager.initiateBigBang();
+                break;
             default:
                 comment("Unknown Command: ");
                 StringBuilder sb = new StringBuilder();
