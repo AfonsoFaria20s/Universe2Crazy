@@ -5,6 +5,7 @@ import org.afonso.Universe2Crazy.entities.UniverseFrame;
 import org.afonso.Universe2Crazy.entities.UniverseManager;
 import org.afonso.Universe2Crazy.entities.UniversePanel;
 import org.afonso.Universe2Crazy.entities.customization.Colors;
+import org.afonso.Universe2Crazy.session.UserSession;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -18,16 +19,24 @@ public class ConsoleManager {
     private CommandParser commandParser;
     private Console console;
     private Colors colors;
+    private UserSession userSession;
 
     private JMenuBar menuBar;
 
-    public ConsoleManager(HistoryPanel historyPanel, CommandLine commandLine, JMenuBar menuBar, UniverseManager universeManager, Console console, Colors colors) {
+    public ConsoleManager(HistoryPanel historyPanel,
+                          CommandLine commandLine,
+                          JMenuBar menuBar,
+                          UniverseManager universeManager,
+                          Console console,
+                          Colors colors,
+                          UserSession userSession) {
         this.historyPanel = historyPanel;
         this.commandLine = commandLine;
         this.menuBar = menuBar;
         this.universeManager = universeManager;
         this.console = console;
         this.colors = colors;
+        this.userSession = userSession;
 
         this.commandParser = new CommandParser();
 
@@ -129,16 +138,40 @@ public class ConsoleManager {
                 break;
 
             // Easter egg cases
+            case "godmode":
+                comment("Your touch rewrites fate.\nBut even gods fall in time...");
+                userSession.enableGodMode();
+
+                // Auto-disable after 1 minute (60_000 ms)
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(60_000);
+                        userSession.disableGodMode();
+                        comment("GODMODE has faded...\nThe stars watch once more.");
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }).start();
+                break;
             case "explode":
-                String universeId = parsedCommand.getArgs()[0];
-                if (universeManager.explodeUniverse(universeId) == 0) {
-                    comment("BOOM!!!");
+                if(userSession.isGodModeEnabled()) {
+                    String universeId = parsedCommand.getArgs()[0];
+                    if (universeManager.explodeUniverse(universeId) == 0) {
+                        comment("The one who chose this path\n shall receive the the things he wished for...");
+                    } else {
+                        comment("Error: Universe does not exist!");
+                    }
                 } else {
-                    comment("Error: Universe does not exist!");
+                    comment("Once the stars align,\ngreat power shall be used....");
                 }
                 break;
             case "bigbang":
-                universeManager.initiateBigBang();
+                if(userSession.isGodModeEnabled()) {
+                    comment("Let the Almighty know true fear!");
+                    universeManager.initiateBigBang();
+                } else {
+                    comment("Forbidden: Only those who walk among gods\n may unleash the great power!");
+                }
                 break;
             default:
                 comment("Unknown Command: ");

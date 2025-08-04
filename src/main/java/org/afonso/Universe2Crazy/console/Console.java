@@ -2,6 +2,7 @@ package org.afonso.Universe2Crazy.console;
 
 import org.afonso.Universe2Crazy.entities.UniverseManager;
 import org.afonso.Universe2Crazy.entities.customization.Colors;
+import org.afonso.Universe2Crazy.session.UserSession;
 import org.w3c.dom.css.Rect;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ public class Console extends JFrame {
     private HistoryPanel historyPanel;
     private CommandLine commandLine;
     private UniverseManager universeManager;
+    private UserSession userSession;
     private Colors colors;
 
     private JMenuBar menuBar;
@@ -57,9 +59,10 @@ public class Console extends JFrame {
         this.add(commandLine, BorderLayout.SOUTH);
 
         colors = new Colors();
+        userSession = new UserSession();
 
         UniverseManager universeManager = new UniverseManager(historyPanel);
-        ConsoleManager consoleManager = new ConsoleManager(historyPanel, commandLine, menuBar, universeManager, this, colors);
+        ConsoleManager consoleManager = new ConsoleManager(historyPanel, commandLine, menuBar, universeManager, this, colors, userSession);
     }
 
     public void init() {
