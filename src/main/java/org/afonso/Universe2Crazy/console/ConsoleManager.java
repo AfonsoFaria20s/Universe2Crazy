@@ -10,6 +10,9 @@ import org.afonso.Universe2Crazy.session.UserSession;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ConsoleManager {
 
@@ -23,6 +26,9 @@ public class ConsoleManager {
 
     private JMenuBar menuBar;
 
+    private List<String> commandsUsed = new ArrayList<>();
+    private int commandHistoryIndex = -1;
+
     public ConsoleManager(HistoryPanel historyPanel,
                           CommandLine commandLine,
                           JMenuBar menuBar,
@@ -30,6 +36,7 @@ public class ConsoleManager {
                           Console console,
                           Colors colors,
                           UserSession userSession) {
+
         this.historyPanel = historyPanel;
         this.commandLine = commandLine;
         this.menuBar = menuBar;
@@ -50,10 +57,35 @@ public class ConsoleManager {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                if(keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+                JTextField field = commandLine.getField();
 
-                    processInput();
+                switch (keyEvent.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        String currentCommand = field.getText().trim();
+                        if (!currentCommand.isEmpty()) {
+                            processInput();
+                            if (commandsUsed.isEmpty() || !commandsUsed.getLast().equals(currentCommand)) {
+                                commandsUsed.add(currentCommand);
+                            }
+                            commandHistoryIndex = commandsUsed.size(); // reset
+                        }
+                        break;
 
+                    case KeyEvent.VK_UP:
+                        if (!commandsUsed.isEmpty() && commandHistoryIndex > 0) {
+                            commandHistoryIndex--;
+                            field.setText(commandsUsed.get(commandHistoryIndex));
+                        }
+                        break;
+
+                    case KeyEvent.VK_DOWN:
+                        if (!commandsUsed.isEmpty() && commandHistoryIndex < commandsUsed.size() - 1) {
+                            commandHistoryIndex++;
+                            field.setText(commandsUsed.get(commandHistoryIndex));
+                        } else if (commandHistoryIndex >= commandsUsed.size() - 1) {
+                            field.setText("");
+                        }
+                        break;
                 }
             }
 
@@ -122,13 +154,13 @@ public class ConsoleManager {
                 break;
             case "name":
                 String id = args[0];
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb1 = new StringBuilder();
 
-                for(String arg : args) {
-                    sb.append(arg).append(" ");
+                for(int i = 1; i < args.length; i++) {
+                    sb1.append(args[i]).append(" ");
                 }
 
-                String newName = sb.toString();
+                String newName = sb1.toString();
 
                 universeManager.getUniverses().get(id).setName(newName);
                 universeManager.getUniverses().get(id).getUniverseFrame().updateFrame(newName);
@@ -196,5 +228,9 @@ public class ConsoleManager {
 
     private void comment(String text) {
         historyPanel.appendCommentHistory(text);
+    }
+
+    public List<String> getCommandsUsed() {
+        return this.commandsUsed;
     }
 }

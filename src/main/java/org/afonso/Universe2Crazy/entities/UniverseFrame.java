@@ -33,7 +33,6 @@ public class UniverseFrame extends JFrame {
         this.setTitle(title);
     }
 
-    // Animations
     public void explode() {
         Timer timer = new Timer(50,null);
         int[] count = {0};
